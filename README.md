@@ -76,6 +76,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 Jake's Edit.. Delete ME! PP
 
 Project Structure
+
+```
 src/
 |-- components/
 | |-- common/
@@ -100,3 +102,4 @@ src/
 | |-- global.css
 |-- App.js
 |-- index.js
+```
