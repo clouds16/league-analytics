@@ -74,3 +74,29 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 Jake's Edit.. Delete ME! PP
+
+Project Structure
+src/
+|-- components/
+| |-- common/
+| | |-- Button.js
+| | |-- Header.js
+| | |-- Footer.js
+| |-- layout/
+| | |-- MainLayout.js
+| |-- pages/
+| | |-- HomePage.js
+| | |-- JakesPage.js
+| | |-- AboutPage.js
+|-- hooks/
+| |-- useCustomHook.js
+|-- context/
+| |-- AuthContext.js
+|-- services/
+| |-- api.js
+|-- utils/
+| |-- helpers.js
+|-- styles/
+| |-- global.css
+|-- App.js
+|-- index.js
