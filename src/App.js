@@ -4,8 +4,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-import HomePage from "./components/pages/HomePage";
-import JakesPage from "./components/pages/JakesPage";
+import HomePage from "./pages/HomePage";
+import JakesPage from "./pages/JakesPage";
 import "./App.css";
 
 function App() {

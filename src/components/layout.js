@@ -9,8 +9,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 const Layout = ({ children, ...otherProps }) => {
     return (
 
-        <Section>
-            <Div>
+        <Container {...otherProps}>
+            <Container>
                 <Navbar expand="lg" className="bg-body-tertiary">
                     <Container>
                         <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
@@ -34,11 +34,11 @@ const Layout = ({ children, ...otherProps }) => {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-            </Div>
-            <Div>
+            </Container>
+            <Container>
                 {children}
-            </Div>
-        </Section>
+            </Container>
+        </Container>
     );
 }
 
