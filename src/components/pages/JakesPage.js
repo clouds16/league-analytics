@@ -3,11 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import useLolData from "../../hooks/useLolData";
 import ChampionCard from "../compareChamp/ChampionCard.js";
+import ItemCard from "../compareChamp/ItemCard.js";
+import ItemDropdown from "../compareChamp/ItemDropdown.js";
+import itemsData from "../../data/someItems.json";
 
 function JakesPage() {
   const navigate = useNavigate();
   const [aatroxLevel, setAatroxLevel] = useState(1);
   const [akaliLevel, setAkaliLevel] = useState(1);
+  const [aatroxItems, setAatroxItems] = useState(Array(6).fill(""));
+  const [akaliItems, setAkaliItems] = useState(Array(6).fill(""));
+
   const {
     data: aatroxData,
     loading: aatroxLoading,
@@ -23,45 +29,88 @@ function JakesPage() {
     navigate("/");
   };
 
+  const handleItemSelect = (champItems, setChampItems, index, itemId) => {
+    const newItems = [...champItems];
+    newItems[index] = itemId;
+    setChampItems(newItems);
+  };
+
   return (
     <Container className="mt-5">
-      <h2 className="mb-4">Featured Champions</h2>
+      <h2 className="mb-4">Champion Comparison</h2>
       <Row>
         <Col md={6}>
           {aatroxLoading ? (
-            <div>Loading...</div>
+            <div>Loading Aatrox...</div>
           ) : aatroxError ? (
-            <div>Error: {aatroxError}</div>
+            <div>Error loading Aatrox: {aatroxError}</div>
+          ) : aatroxData ? (
+            <>
+              <ChampionCard
+                champion={aatroxData}
+                level={aatroxLevel}
+                setLevel={setAatroxLevel}
+                otherChampion={akaliData}
+                otherLevel={akaliLevel}
+                isAatrox={true}
+              />
+              <h4 className="mt-3">Aatrox Items</h4>
+              {aatroxItems.map((item, index) => (
+                <ItemDropdown
+                  key={index}
+                  items={itemsData}
+                  selectedItem={item}
+                  onSelectItem={(itemId) =>
+                    handleItemSelect(aatroxItems, setAatroxItems, index, itemId)
+                  }
+                />
+              ))}
+              <ItemCard
+                items={aatroxItems.map((id) => itemsData[id]).filter(Boolean)}
+              />
+            </>
           ) : (
-            <ChampionCard
-              champion={aatroxData}
-              level={aatroxLevel}
-              setLevel={setAatroxLevel}
-              otherChampion={akaliData}
-              otherLevel={akaliLevel}
-              isAatrox={true}
-            />
+            <div>No data for Aatrox</div>
           )}
         </Col>
         <Col md={6}>
           {akaliLoading ? (
-            <div>Loading...</div>
+            <div>Loading Akali...</div>
           ) : akaliError ? (
-            <div>Error: {akaliError}</div>
+            <div>Error loading Akali: {akaliError}</div>
+          ) : akaliData ? (
+            <>
+              <ChampionCard
+                champion={akaliData}
+                level={akaliLevel}
+                setLevel={setAkaliLevel}
+                otherChampion={aatroxData}
+                otherLevel={aatroxLevel}
+                isAatrox={false}
+              />
+              <h4 className="mt-3">Akali Items</h4>
+              {akaliItems.map((item, index) => (
+                <ItemDropdown
+                  key={index}
+                  items={itemsData}
+                  selectedItem={item}
+                  onSelectItem={(itemId) =>
+                    handleItemSelect(akaliItems, setAkaliItems, index, itemId)
+                  }
+                />
+              ))}
+              <ItemCard
+                items={akaliItems.map((id) => itemsData[id]).filter(Boolean)}
+              />
+            </>
           ) : (
-            <ChampionCard
-              champion={akaliData}
-              level={akaliLevel}
-              setLevel={setAkaliLevel}
-              otherChampion={aatroxData}
-              otherLevel={aatroxLevel}
-              isAatrox={false}
-            />
+            <div>No data for Akali</div>
           )}
         </Col>
       </Row>
-      <Button variant="primary" onClick={handleGoBack} className="mt-3">
-        Go Back to Home
+
+      <Button onClick={handleGoBack} className="mt-4">
+        Go Back
       </Button>
     </Container>
   );

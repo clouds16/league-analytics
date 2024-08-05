@@ -12,6 +12,10 @@ function ChampionCard({
 }) {
   const { getStatColor, formatStat } = useChampionStats();
 
+  if (!champion || !otherChampion) {
+    return <div>Loading champion data...</div>;
+  }
+
   const renderChampionStats = () => {
     const relevantStats = [
       "health",
@@ -24,17 +28,20 @@ function ChampionCard({
 
     return relevantStats.map((key) => {
       if (key in champion.stats) {
-        const backgroundColor = getStatColor(
+        const color = getStatColor(
           champion.stats[key],
           otherChampion.stats[key],
           level,
           otherLevel,
           isAatrox
         );
+
+        const formattedStat = formatStat(champion.stats[key], level);
+
         return (
-          <ListGroup.Item key={key} style={{ backgroundColor }}>
+          <ListGroup.Item key={key} style={{ backgroundColor: color }}>
             <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
-            {formatStat(champion.stats[key], level)}
+            {formattedStat}
           </ListGroup.Item>
         );
       }
@@ -44,13 +51,11 @@ function ChampionCard({
 
   return (
     <Card>
-      <div style={{ padding: "1rem", textAlign: "center" }}>
-        <img
-          src={champion.icon}
-          alt={`${champion.name} icon`}
-          style={{ width: "12.5%", height: "auto" }}
-        />
-      </div>
+      <Card.Img
+        variant="top"
+        src={champion.icon}
+        style={{ width: "64px", height: "64px", margin: "10px auto" }}
+      />
       <Card.Body>
         <Card.Title>{champion.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
@@ -58,16 +63,13 @@ function ChampionCard({
         </Card.Subtitle>
         <Form.Group className="mb-3">
           <Form.Label>Champion Level</Form.Label>
-          <Form.Select
+          <Form.Control
+            type="number"
+            min="1"
+            max="18"
             value={level}
             onChange={(e) => setLevel(Number(e.target.value))}
-          >
-            {[...Array(18)].map((_, i) => (
-              <option key={i + 1} value={i + 1}>
-                Level {i + 1}
-              </option>
-            ))}
-          </Form.Select>
+          />
         </Form.Group>
       </Card.Body>
       <ListGroup variant="flush">{renderChampionStats()}</ListGroup>

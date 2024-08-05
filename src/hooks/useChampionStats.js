@@ -23,24 +23,17 @@ function useChampionStats() {
   };
 
   const getStatColor = useMemo(
-    () =>
-      (champStat, otherChampStat, champLevel, otherChampLevel, isAatrox) => {
-        const champValue = calculateStatValue(champStat, champLevel);
-        const otherChampValue = calculateStatValue(
-          otherChampStat,
-          otherChampLevel
-        );
-        if (champValue > otherChampValue) {
-          return isAatrox
-            ? "rgba(144, 238, 144, 0.5)"
-            : "rgba(255, 99, 71, 0.5)";
-        } else if (otherChampValue > champValue) {
-          return isAatrox
-            ? "rgba(255, 99, 71, 0.5)"
-            : "rgba(144, 238, 144, 0.5)";
-        }
-        return "";
-      },
+    () => (champStat, otherChampStat, champLevel, otherLevel) => {
+      const champValue = calculateStatValue(champStat, champLevel);
+      const otherChampValue = calculateStatValue(otherChampStat, otherLevel);
+
+      if (champValue > otherChampValue) {
+        return "rgba(144, 238, 144, 0.5)"; // Light green
+      } else if (otherChampValue > champValue) {
+        return "rgba(255, 99, 71, 0.5)"; // Light red
+      }
+      return ""; // No color if stats are equal
+    },
     []
   );
 
