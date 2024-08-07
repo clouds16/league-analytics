@@ -1,6 +1,6 @@
 // src/components/pages/HomePage.js
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -15,6 +15,19 @@ function HomePage() {
   const handleGoToJakesPage = () => {
     navigate("/jake");
   };
+
+  const getFreeRotationChamps = useMemo(async () => {
+    const url = 'https://developer.riotgames.com/apis#account-v1/lol/platform/v3/champion-rotations'
+
+    try {
+      const champs = await fetch('')
+    } catch (e) {
+      console.error(e)
+    }
+  })
+  useEffect(() => {
+
+  })
 
   return (
     <>
